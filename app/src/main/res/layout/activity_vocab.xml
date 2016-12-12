@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/vocabback"
+    tools:context="com.example.hsnoh.typeit.vocab">
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/imageView5"
+        android:layout_alignTop="@+id/word"
+        android:src="@drawable/line" />
+
+    <TextView
+        android:id="@+id/word"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_vertical"
+        android:layout_marginTop="80dp"
+        android:text="hiiiiiiiiillllll"
+        android:textColor="@color/abc_primary_text_disable_only_material_dark"
+        android:textSize="60sp" />
+
+    <TextView
+        android:id="@+id/accuracy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/input"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_vertical"
+        android:text="Accuracy : 0"
+        android:textColor="@color/abc_primary_text_disable_only_material_dark"
+        android:textSize="25sp" />
+
+    <TextView
+        android:id="@+id/typingrate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/accuracy"
+        android:text="Typing Rate : 0"
+        android:textColor="@color/abc_primary_text_disable_only_material_dark"
+        android:textSize="25sp" />
+
+    <EditText
+        android:id="@+id/input"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/word"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_vertical"
+        android:layout_marginTop="30dp"
+        android:maxLines="1"
+        android:textColor="@color/abc_primary_text_disable_only_material_dark"
+        android:textSize="40sp" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/word"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/line" />
+
+
+</RelativeLayout>
