@@ -17,15 +17,22 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-       </activity>
-        <activity android:name=".Splash" />
-        <activity android:name=".Egg"
-            android:windowSoftInputMode="stateAlwaysVisible"/>
-        <activity android:name=".vocab"
-            android:windowSoftInputMode="stateAlwaysVisible"/>
-        <activity android:name=".sentence"
-            android:windowSoftInputMode="stateAlwaysVisible"/>
-        <activity android:name=".air"/>
+        </activity>
+        <activity
+            android:name=".Egg"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysVisible" />
+        <activity
+            android:name=".vocab"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysVisible" />
+        <activity
+            android:name=".sentence"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysVisible" />
+        <activity
+            android:name=".air"
+            android:screenOrientation="portrait" />
         <activity android:name=".stat" />
 
     </application>

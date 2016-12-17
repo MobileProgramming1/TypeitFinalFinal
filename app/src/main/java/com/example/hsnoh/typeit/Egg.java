@@ -13,6 +13,7 @@ import android.os.Handler;
 import android.renderscript.ScriptGroup;
 import android.support.v7.app.AlertDialog;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -23,192 +24,8 @@ import android.media.SoundPool;
 
 import com.example.hsnoh.typeit.DBManager;
 
-class word extends Egg {
 
-    protected String word;
-    protected String wordInKorean;
-
-
-    public word(DBManager dbManager) {
-        Random rand = new Random();
-        int random = rand.nextInt(9);
-        word = dbManager.getWord(random);
-        wordInKorean = dbManager.getWordInKorean(random);
-    }
-
-    public String getWord() {
-        return word;
-    }
-
-    public String getWordInKorean() {
-        return wordInKorean;
-    }
-}
-
-class randomWord extends word {
-    //  private String word;
-    //  private String wordInKorean;
-    public final int lengthOfWord;
-
-    public randomWord(DBManager dbManager) {
-        super(dbManager);
-        lengthOfWord = word.length();
-    }
-
-    //  public String getWord() {
-    //      return word;
-    // }
-
-    // public String getWordInKorean() {
-    //     return wordInKorean;
-    // }
-
-    public boolean isLetterInWord(char letter) {
-        if (word.indexOf(letter) < 0) return false;
-        return true;
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return word.equals(other);
-    }
-
-    public char charAt(int index) {
-        return word.charAt(index);
-    }
-
-}
-
-class tried extends Activity {
-    static final int MAXFAIL = 6;
-    private char[] notValidLetter;
-    private int failCount;
-    private String stringForDisplay;
-    private boolean[] isTried;
-    private int eggForDisplay;
-    MediaPlayer eggcrack;
-
-    public tried(int maxTryNumber) {
-        notValidLetter = new char[maxTryNumber];
-        isTried = new boolean[26];
-        for (int i = 0; i < 26; i++) isTried[i] = false;
-        failCount = 0;
-        stringForDisplay = "";
-        eggForDisplay = R.drawable.egg1;
-    }
-
-    public void increaseFailCount() {
-        failCount++;
-        return;
-    }
-
-    public void storeNotValidLetter(char guessLetter) {
-        int index = guessLetter - 'a';
-        notValidLetter[failCount] = guessLetter;
-        isTried[index] = true;
-        return;
-    }
-
-    public boolean isTriedBefore(char guessLetter) {
-        int index = guessLetter - 'a';
-        return isTried[index];
-    }
-
-    public boolean setTried(char guessLetter) {
-        int index = guessLetter - 'a';
-        return isTried[index] = true;
-    }
-
-    public boolean isGameOver() {
-        if (failCount == MAXFAIL) return true;
-        else return false;
-    }
-
-    public void displayTriedCharAt(TextView tried) {
-        stringForDisplay = "";
-        for (int i = 0; i < failCount; i++) {
-            stringForDisplay += notValidLetter[i];
-            stringForDisplay += ", ";
-        }
-        tried.setText("Tried : " + stringForDisplay);
-    }
-
-    public void displayEggAt(ImageView egg) {
-
-
-        switch (failCount) {
-            case 1:
-                eggForDisplay = R.drawable.egg2;
-                break;
-            case 2:
-                eggForDisplay = R.drawable.egg3;
-                break;
-            case 3:
-                eggForDisplay = R.drawable.egg4;
-                break;
-            case 4:
-                eggForDisplay = R.drawable.egg5;
-                break;
-            case 5:
-                eggForDisplay = R.drawable.egg6;
-                break;
-            case 6:
-                eggForDisplay = R.drawable.egg7;
-                break;
-            default:
-                eggForDisplay = R.drawable.egg1;
-                break;
-        }
-        egg.setImageResource(eggForDisplay);
-    }
-
-}
-
-class blank {
-
-    private char[] blank;
-    private int remainedBlank;
-    private String answerWord;
-    private String stringForDisplay;
-
-    public blank(String word) {
-        answerWord = word;
-        blank = new char[word.length()];
-        for (int i = 0; i < word.length(); i++) blank[i] = '-';
-        remainedBlank = word.length();
-        stringForDisplay = "";
-    }
-
-    public void fillBlank(char letter) {
-        for (int i = 0; i < answerWord.length(); i++) {
-            if (answerWord.charAt(i) == letter) {
-                blank[i] = letter;
-                remainedBlank--;
-            }
-        }
-    }
-
-    public void decreaseRemainedBlank() {
-        remainedBlank--;
-    }
-
-    public void displayCurrentStatusAt(TextView CurrentStatus) {
-        stringForDisplay = "";
-        for (int i = 0; i < answerWord.length(); i++) {
-            stringForDisplay += blank[i];
-            stringForDisplay += " ";
-        }
-        CurrentStatus.setText(stringForDisplay);
-    }
-
-    public boolean isClear() {
-        if (remainedBlank == 0) return true;
-        else return false;
-    }
-}
-
-public class Egg extends TypeIt {
-
+public class Egg extends AppCompatActivity {
     public randomWord answerWord;
     public blank blank;
     public tried tried;
@@ -219,35 +36,18 @@ public class Egg extends TypeIt {
     // private static MediaPlayer mp;
     static boolean ON = true;
     static boolean OFF = false;
-    private SoundPool sounds;
-
-    private int msprite = 6;
-
-
     public DBManager dbManager;
-    public DBManager dbManager2;
     InputMethodManager inputMethodManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_egg);
-
-
         currentStatus = (TextView) findViewById(R.id.currentStatus);
         egg = (ImageView) findViewById(R.id.egg1);
         triedTextView = (TextView) findViewById(R.id.triedTextView);
         dbManager = new DBManager(getApplicationContext(), "Word.db", null, 1);
-        dbManager.insert("insert into WORD_SET values(null, 'apple', '사과');");
-        dbManager.insert("insert into WORD_SET values(null, 'banana', '바나나');");
-        dbManager.insert("insert into WORD_SET values(null, 'grape', '포도');");
-        dbManager.insert("insert into WORD_SET values(null, 'melon', '멜론');");
-        dbManager.insert("insert into WORD_SET values(null, 'orange', '오렌지');");
-        dbManager.insert("insert into WORD_SET values(null, 'strawberry', '딸기');");
-        dbManager.insert("insert into WORD_SET values(null, 'watermelon', '수박');");
-        dbManager.insert("insert into WORD_SET values(null, 'mobile', '모바일');");
-        dbManager.insert("insert into WORD_SET values(null, 'system', '시스템');");
-        dbManager2 = dbManager;
+
         inputMethodManager = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
         //inputMethodManager.toggleSoftInputFromWindow(null, inputMethodManager.SHOW_FORCED, 0);
         answerWord = new randomWord(dbManager);
@@ -267,15 +67,7 @@ public class Egg extends TypeIt {
                 }
                 return false;
             }
-            //public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-            //   final boolean isEnterEvent = event != null
-            //          && event.getKeyCode() == KeyEvent.KEYCODE_ENTER;
-            // final boolean isEnterUpEvent = isEnterEvent && event.getAction() == KeyEvent.ACTION_UP;
-            // final boolean isEnterDownEvent = isEnterEvent && event.getAction() == KeyEvent.ACTION_DOWN;
-            // if (isEnterDownEvent || isEnterUpEvent || isEnterEvent) guessWord();
-            //  return true;
-            //  }
-        });
+        });//엔터를 누르면 입력받은 글자를 이용하여 실행한다
     }
 
 
@@ -284,80 +76,72 @@ public class Egg extends TypeIt {
         tried.displayTriedCharAt(triedTextView);
         tried.displayEggAt(egg);
         guess.setText("");
-    }
+    }// 현재 빈칸, 시도한 글자, 남은 라이프를 보여준다
 
     public void restartGame() {
-        //answerWord = null;
-        //blank = null;
-        //tried = null;
-        answerWord = new randomWord(dbManager2);
+        answerWord = new randomWord(dbManager);
         blank = new blank(answerWord.getWord());
         tried = new tried(answerWord.lengthOfWord);
-    }
+    }// 게임을 처음부터 다시 시작한다
+    public boolean isAlphabet(char letter){
+        letter = Character.toLowerCase(letter);
+        if (letter >= 'a' && letter <= 'z') return true;
+        return false;
+    }//입력 받은 문자가 알파벳인지 검사한다
 
-    public void guessWord(View view) {//TODO more modulation
-        MediaPlayer chick;
+    public void guessWord(View view) {
 
         char guessLetter = ' ';
-        String temp2 = guess.getText().toString();
-        String temp = "";
-        if (temp2.toUpperCase().equals(temp2.toLowerCase())) {
-            return;
-        } else temp2 = temp2.toLowerCase();
+        String input = guess.getText().toString();
 
-        if (temp2.equals(null)) return;
-        else guessLetter = temp2.charAt(0);
-        //TODO is guessed char alphabetic character?
+        if (input == null) return;
+        if(isAlphabet(input.charAt(0))) guessLetter = input.charAt(0);
+        else return;//입력을 받지 않았겄나 알파벳이 아닌 문자일 경우 리턴
 
         if (tried.isTriedBefore(guessLetter)) {
-        } else {
-            if (answerWord.isLetterInWord(guessLetter)) {
-                blank.fillBlank(guessLetter);
-                // blank.decreaseRemainedBlank();//빈칸을 채우면서 남은 빈칸의 수를 감소 시키는 것은 단일책임의 원칙에 위배?
-            } else {
-                tried.storeNotValidLetter(guessLetter);
-                tried.increaseFailCount();
+        } else {//전에 시도했던 문자가 아니면
+            if (answerWord.isLetterInWord(guessLetter)) {//입력받은 문자가 단어 안에 있는지 검사
+                blank.fillBlank(guessLetter);//있으면 빈칸 채우기
+            } else {//없으면
+                tried.storeNotValidLetter(guessLetter);//유효하지 않은(단어에 없는) 단어라고 저장
+                tried.increaseFailCount();//실패 횟수 증가
             }
-            tried.setTried(guessLetter);
+            tried.setTried(guessLetter);//시도 했다고 저장
         }
-
-        display();
-        if (blank.isClear()) {
-            egg.setImageResource(R.drawable.egg8);
-            chick = MediaPlayer.create(this, R.raw.chick);
-            chick.start();
-
-
-        }
-        if (tried.isGameOver()) {
-            MediaPlayer frying;
-            frying = MediaPlayer.create(this, R.raw.frying);
-            frying.start();
-
-
-        }
+        display();//현재 상태 표시
         if (blank.isClear() || tried.isGameOver()) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-            builder.setTitle("Retry?")
-                    .setMessage("Answer is " + answerWord.getWord() + " : " + answerWord.getWordInKorean() + "\nTry again?")
-                    .setCancelable(false)
-                    .setPositiveButton("yes", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int whichButton) {
-                            restartGame();
-                            display();
-                        }
-                    })
-                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int whichButton) {
-
-                            dialog.cancel();
-                            finish();
-                        }
-                    });
-            AlertDialog dialog = builder.create();
-            dialog.show();
+            MediaPlayer sound;
+            if(blank.isClear()){
+                sound = MediaPlayer.create(this,R.raw.chick);
+                egg.setImageResource(R.drawable.egg8);
+            } else{
+                sound = MediaPlayer.create(this,R.raw.frying);
+            }//게임 클리어인지 게임 오버인지에 따라 음악 설정
+            sound.start();
+            dialog(this);//다이얼로그 띄우기
         }
+    }
+
+    public void dialog(Context context) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Retry?")
+                .setMessage("Answer is " + answerWord.getWord() + " : " + answerWord.getWordInKorean() + "\nTry again?")
+                .setCancelable(false)
+                .setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        restartGame();//리게임
+                        display();
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+
+                        dialog.cancel();
+                        finish();//메인 화면으로
+                    }
+                });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
 }

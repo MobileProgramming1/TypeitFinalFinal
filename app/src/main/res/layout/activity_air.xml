@@ -34,7 +34,7 @@
         android:maxLength="1"
         android:maxLines="1"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignEnd="@+id/textView" />
 
     <TextView
         android:id="@+id/countDown"
@@ -42,26 +42,29 @@
         android:layout_height="wrap_content"
         android:text="3"
         android:textSize="100sp"
-        android:layout_above="@+id/input"
+        android:layout_below="@+id/itemBUtton"
         android:layout_centerHorizontal="true" />
 
-    <Button
+    <ImageButton
         android:id="@+id/pause"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick = "test"
-        android:layout_alignBaseline="@+id/score"
-        android:layout_alignBottom="@+id/score"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        style="?android:attr/borderlessButtonStyle"
+        android:src="@drawable/pause"
+        android:layout_above="@+id/itemBUtton"
+        android:layout_toStartOf="@+id/countDown"
+        android:layout_marginEnd="90dp" />
 
     <ImageView
         android:id="@+id/plane"
+        android:background="@null"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/plane"
-        android:layout_below="@+id/input"
-        android:layout_alignEnd="@+id/countDown" />
+        android:layout_below="@+id/countDown"
+        android:layout_alignEnd="@+id/countDown"
+        android:layout_marginTop="50dp" />
 
     <TextView
         android:text="stage : 1"
@@ -69,8 +72,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/stage"
         android:layout_below="@+id/score"
-        android:layout_alignLeft="@+id/life"
-        android:layout_alignStart="@+id/life" />
+        android:layout_alignStart="@+id/score" />
 
     <ImageButton
         android:background="@null"
@@ -80,8 +82,16 @@
         android:onClick="useItem"
         android:scaleType="center"
         android:src="@drawable/noitem"
-        android:layout_marginTop="27dp"
+        android:layout_marginTop="18dp"
         android:layout_below="@+id/stage"
-        android:layout_alignLeft="@+id/stage"
-        android:layout_alignStart="@+id/stage" />
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ITEM"
+        android:id="@+id/textView"
+        android:layout_marginTop="9dp"
+        android:layout_below="@+id/pause"
+        android:layout_alignStart="@+id/life" />
 </RelativeLayout>

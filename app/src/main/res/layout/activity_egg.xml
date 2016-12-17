@@ -42,5 +42,6 @@
         android:layout_alignParentRight="true"
         android:layout_marginTop="150dp"
         android:layout_marginRight="32dp"
+        android:maxLines="1"
         android:maxLength="1" />
 </RelativeLayout>

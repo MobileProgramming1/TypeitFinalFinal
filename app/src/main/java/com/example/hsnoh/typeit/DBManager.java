@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.media.SoundPool;
 import android.widget.TextView;
 
 
@@ -41,6 +42,19 @@ public class DBManager extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL(_query);
         db.close();
+    }
+
+    public boolean isExists(String tableName) {
+        if (tableName == null) return false;
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("select count(*) from sqlite_master where type = ? and name = ?", new String[]{"table", tableName});
+        if (!cursor.moveToFirst()) {
+            cursor.close();
+            return false;
+        }
+        int count = cursor.getInt(0);
+        cursor.close();
+        return count > 0;
     }
 
     public String getWord(int num) {
@@ -94,6 +108,7 @@ public class DBManager extends SQLiteOpenHelper {
         }
         return string;
     }
+
     public String getTranslation(int num) {
         SQLiteDatabase db = getReadableDatabase();
         String string = "";
@@ -105,24 +120,6 @@ public class DBManager extends SQLiteOpenHelper {
                 break;
             } else i++;
         }
-        return string;
-    }
-    public String getAnswer(int num) {
-        String blank = "-------";
-        SQLiteDatabase db = getReadableDatabase();
-        String string = "";
-        int answer;
-        int i = 0;
-        Cursor cursor = db.rawQuery("select * from SENTENCE_SET", null);
-        while (cursor.moveToNext()) {
-            if (i == num) {
-                string = cursor.getString(1);
-                answer = cursor.getInt(2);
-                string = string.replace(blank, cursor.getString(answer + 2));
-                break;
-            } else i++;
-        }
-
         return string;
     }
 

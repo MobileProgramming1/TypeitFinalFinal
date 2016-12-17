@@ -26,7 +26,7 @@ public class Target extends air {
     private int item;
     public float currentY;
     public ValueAnimator animator;
-    private char firstLetter;
+    public char firstLetter;
     public LinearLayout target;
     public TextView targetWord;
     public ImageView targetImage;
@@ -39,9 +39,7 @@ public class Target extends air {
         targetWord = new TextView(context);
         targetImage = new ImageView(context);
         targetImage.setImageResource(R.drawable.target);
-        targetWord.setText("apple");
-        firstLetter = getWord().charAt(0);
-        targetWord.setTextSize(22);
+        targetWord.setTextSize(18);
         targetWord.setTextColor(Color.RED);
         targetWord.setTypeface(null, Typeface.BOLD);
         target.setOrientation(LinearLayout.HORIZONTAL);
@@ -54,13 +52,13 @@ public class Target extends air {
         } else {
             item = NORMAL;
             targetWord.setTextColor(Color.BLACK);
-        }
+        }//랜덤 아이템
         target.addView(targetImage);
         target.addView(targetWord);
         target.setVisibility(View.INVISIBLE);
 
         animator = ValueAnimator.ofInt(0, 650);
-        int duration = 25000 - 3000 * (currentStage - 1);
+        int duration = 25000*2 - 3000 * (currentStage - 1);//스테이지에 따른 속도 조절
         animator.setDuration((currentStage <= 7 ? duration : 4000));
 
 

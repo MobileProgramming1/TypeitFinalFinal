@@ -18,7 +18,8 @@
             android:id="@+id/soundButton"
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:onClick="onOff"
             android:layout_weight="1"
             android:src="@drawable/soundonbutton" />
         <ImageView
@@ -29,11 +30,12 @@
             android:layout_height="66dp" />
         <ImageButton
             android:id="@+id/statButton"
+            android:clickable="false"
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/statbutton" />
+             />
 
     </LinearLayout>
     <LinearLayout
